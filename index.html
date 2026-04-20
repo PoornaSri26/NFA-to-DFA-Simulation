@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NFA &rarr; DFA Converter</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="scanline"></div>
+
+<button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+  <span id="themeIcon">T</span>
+</button>
+
+<header>
+  <div class="logo">NFA<span class="arrow-logo">&rarr;</span>DFA</div>
+  <div class="subtitle">Subset Construction Algorithm</div>
+</header>
+
+<main>
+  <section class="panel input-panel">
+    <div class="panel-label">01 &mdash; Define NFA</div>
+
+    <div class="field-group">
+      <label>States <span class="hint">(comma-separated)</span></label>
+      <input type="text" id="states" placeholder="q0, q1, q2" value="q0,q1,q2">
+    </div>
+
+    <div class="field-group">
+      <label>Alphabet <span class="hint">(comma-separated)</span></label>
+      <input type="text" id="alphabet" placeholder="a, b" value="a,b">
+    </div>
+
+    <div class="field-group">
+      <label>Start State</label>
+      <input type="text" id="startState" placeholder="q0" value="q0">
+    </div>
+
+    <div class="field-group">
+      <label>Accept States <span class="hint">(comma-separated)</span></label>
+      <input type="text" id="acceptStates" placeholder="q2" value="q2">
+    </div>
+
+    <div class="field-group">
+      <label>Transition Function <span class="hint">(one per line: state,symbol,next1;next2)</span></label>
+      <textarea id="transitions" rows="7" placeholder="q0,a,q0;q1&#10;q0,b,q0&#10;q1,b,q2">q0,a,q0;q1
+q0,b,q0
+q1,b,q2</textarea>
+      <div class="hint-block">Format: <code>state,symbol,next1;next2</code> &mdash; use <code>epsilon</code> for epsilon, <code>empty</code> or leave blank for dead state</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" id="convertBtn">Convert to DFA</button>
+      <button class="btn-ghost" id="clearBtn">Clear</button>
+      <button class="btn-ghost" id="exampleBtn">Load Example</button>
+    </div>
+    <div id="errorMsg" class="error-msg"></div>
+  </section>
+
+  <section class="panel output-panel" id="outputPanel">
+    <div class="panel-label">02 &mdash; DFA Result</div>
+    <div id="outputContent" class="output-placeholder">
+      <div class="placeholder-icon">&vdash;</div>
+      <p>Define your NFA and click Convert</p>
+    </div>
+  </section>
+</main>
+
+<section class="canvas-section" id="canvasSection" style="display:none">
+  <div class="panel-label" style="padding: 0 2rem 1rem;">03 &mdash; Automaton Diagram</div>
+  <div class="canvas-tabs">
+    <button class="tab active" id="tabNFA" onclick="showDiagram('nfa')">NFA</button>
+    <button class="tab" id="tabDFA" onclick="showDiagram('dfa')">DFA</button>
+  </div>
+  <canvas id="diagram" width="900" height="420"></canvas>
+</section>
+
+<section class="table-section" id="tableSection" style="display:none">
+  <div class="panel-label" style="padding: 0 2rem 1rem;">04 &mdash; Transition Tables</div>
+  <div class="tables-row">
+    <div>
+      <div class="table-title">NFA Transitions</div>
+      <div id="nfaTable"></div>
+    </div>
+    <div>
+      <div class="table-title">DFA Transitions</div>
+      <div id="dfaTable"></div>
+    </div>
+  </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
